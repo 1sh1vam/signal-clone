@@ -5,10 +5,16 @@ import RegisterScreen from './screens/RegisterScreen';
 
 const Stack = createNativeStackNavigator();
 
+const globalScreenOptions = {
+  headerStyle: { backgroundColor: '#164BED' },
+  headerTitleStyle: { color: '#fff' },
+  headerTintColor: '#fff'
+}
+
 export default function App() {
   return (
     <NavigationContainer>
-      <Stack.Navigator>
+      <Stack.Navigator screenOptions={globalScreenOptions}>
         <Stack.Screen name="Login" component={LoginScreen} />
         <Stack.Screen name="Register" component={RegisterScreen} />
       </Stack.Navigator>
