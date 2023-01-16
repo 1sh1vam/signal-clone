@@ -1,3 +1,4 @@
+import { useNavigation } from '@react-navigation/native';
 import { Button } from '@rneui/base';
 import React, { useState } from 'react';
 import { KeyboardAvoidingView, Platform, TextInput, View } from 'react-native';
@@ -6,6 +7,8 @@ import { StyledButton, StyledImage, StyledInput } from '../StyledComponents';
 const LoginScreen = () => {
   const [emailId, setEmailId] = useState('');
   const [password, setPassword] = useState('');
+
+  const navigation = useNavigation();
 
   const signIn = () => {
 
@@ -35,7 +38,7 @@ const LoginScreen = () => {
         onChangeText={setPassword}
       />
       <StyledButton onPress={signIn} className="mt-2.5 w-52">Login</StyledButton>
-      <StyledButton type="outline" className="mt-2.5 w-52">Register</StyledButton>
+      <StyledButton onPress={() => navigation.navigate('Register')} type="outline" className="mt-2.5 w-52">Register</StyledButton>
     </KeyboardAvoidingView>
   );
 };
