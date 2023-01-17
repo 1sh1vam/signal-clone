@@ -1,15 +1,19 @@
 import { KeyboardAvoidingView, StyleSheet, Text, View } from 'react-native';
-import React, { useState } from 'react';
+import React, { useLayoutEffect, useState } from 'react';
 import { StyledButton, StyledInput, StyledText } from '../StyledComponents';
 import { useNavigation } from '@react-navigation/native';
 
-const RegisterScreen = () => {
+const RegisterScreen = ({ navigation }) => {
   const [name, setName] = useState('');
   const [emailId, setEmailId] = useState('');
   const [password, setPassword] = useState('');
   const [imageUrl, setImageUrl] = useState('')
 
-  const navigation = useNavigation();
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      headerBackTitle: 'Back to Login'
+    });
+  }, [navigation])
 
   const signIn = () => {};
 
@@ -17,7 +21,7 @@ const RegisterScreen = () => {
     <KeyboardAvoidingView
       keyboardVerticalOffset={80}
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-      className="flex-1 items-center bg-white p-5"
+      className="flex-1 items-center justify-center bg-white p-5"
     >
       <StyledText h3>Create a Signal account</StyledText>
       <StyledInput
@@ -49,12 +53,8 @@ const RegisterScreen = () => {
         value={imageUrl}
         onChangeText={setImageUrl}
       />
-      <StyledButton onPress={signIn} buttonStyle={styles.button}>
-        Login
-      </StyledButton>
       <StyledButton
         onPress={() => navigation.navigate('Register')}
-        type="outline"
         buttonStyle={styles.button}
       >
         Register
