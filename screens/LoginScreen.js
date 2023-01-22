@@ -5,6 +5,8 @@ import { KeyboardAvoidingView, Platform, StyleSheet } from 'react-native';
 import { StyledButton, StyledImage, StyledInput } from '../StyledComponents';
 import {  } from 'nativewind';
 import useAuthListener from '../hooks/useAuthListener';
+import { signInWithEmailAndPassword } from 'firebase/auth';
+import { auth } from '../lib/firebase';
 
 const LoginScreen = () => {
   const [emailId, setEmailId] = useState('');
@@ -20,7 +22,7 @@ const LoginScreen = () => {
     })
   }, [user]);
 
-  const signIn = () => {};
+  const signIn = async () => signInWithEmailAndPassword(auth, emailId, password);
 
   return (
     <KeyboardAvoidingView
@@ -48,6 +50,7 @@ const LoginScreen = () => {
         placeholder="Enter your password"
         value={password}
         onChangeText={setPassword}
+        onSubmitEditing={signIn}
       />
       <StyledButton onPress={signIn} buttonStyle={styles.button}>
         Login
