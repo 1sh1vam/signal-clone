@@ -2,6 +2,7 @@ import { KeyboardAvoidingView, StyleSheet, Text, View } from 'react-native';
 import React, { useLayoutEffect, useState } from 'react';
 import { StyledButton, StyledInput, StyledText } from '../StyledComponents';
 import { useNavigation } from '@react-navigation/native';
+import { signUp } from '../services/auth';
 
 const RegisterScreen = ({ navigation }) => {
   const [name, setName] = useState('');
@@ -15,7 +16,13 @@ const RegisterScreen = ({ navigation }) => {
     });
   }, [navigation])
 
-  const signIn = () => {};
+  const registerUser = () => {
+    signUp(emailId, password, name, imageUrl);
+    setName('');
+    setEmailId('');
+    setImageUrl('');
+    setPassword('');
+  }
 
   return (
     <KeyboardAvoidingView
@@ -45,6 +52,7 @@ const RegisterScreen = ({ navigation }) => {
         placeholder="Enter your password"
         value={password}
         onChangeText={setPassword}
+        onSubmitEditing={registerUser}
       />
       <StyledInput
         secureTextEntry
@@ -54,7 +62,7 @@ const RegisterScreen = ({ navigation }) => {
         onChangeText={setImageUrl}
       />
       <StyledButton
-        onPress={() => navigation.navigate('Register')}
+        onPress={registerUser}
         buttonStyle={styles.button}
       >
         Register
