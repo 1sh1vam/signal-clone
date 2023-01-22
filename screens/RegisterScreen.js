@@ -55,7 +55,6 @@ const RegisterScreen = ({ navigation }) => {
         onSubmitEditing={registerUser}
       />
       <StyledInput
-        secureTextEntry
         className="h-10 w-[300px] px-1 text-lg"
         placeholder="Enter image url"
         value={imageUrl}
