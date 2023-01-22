@@ -1,15 +1,24 @@
 import { useNavigation } from '@react-navigation/native';
 import { StatusBar } from 'expo-status-bar';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { KeyboardAvoidingView, Platform, StyleSheet } from 'react-native';
 import { StyledButton, StyledImage, StyledInput } from '../StyledComponents';
 import {  } from 'nativewind';
+import useAuthListener from '../hooks/useAuthListener';
 
 const LoginScreen = () => {
   const [emailId, setEmailId] = useState('');
   const [password, setPassword] = useState('');
 
   const navigation = useNavigation();
+  const { user } = useAuthListener();
+
+  useEffect(() => {
+    if (user) navigation.reset({
+      index: 0,
+      routes: [{ name: 'Home' }]
+    })
+  }, [user]);
 
   const signIn = () => {};
 
