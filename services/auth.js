@@ -1,4 +1,4 @@
-import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
+import { createUserWithEmailAndPassword, signOut, updateProfile } from 'firebase/auth';
 import { auth } from '../lib/firebase';
 
 export const signUp = async (emailId, pwd, name, photoUrl) => {
