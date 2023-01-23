@@ -33,7 +33,7 @@ const HomeScreen = ({ navigation }) => {
           <Pressable className="active:opacity-60">
             <AntDesign name="camerao" size={24} color="black" />
           </Pressable>
-          <Pressable className="active:opacity-60">
+          <Pressable onPress={() => navigation.navigate('AddChat')} className="active:opacity-60">
             <SimpleLineIcons name="pencil" size={24} color="black" />
           </Pressable>
         </View>
