@@ -24,12 +24,12 @@ const HomeScreen = ({ navigation }) => {
       headerTitleStyle: { color: '#000' },
       headerTintColor: '#000',
       headerLeft: () => (
-        <Pressable onPress={signOutUser} className="ml-4 active:opacity-70">
+        <Pressable onPress={signOutUser} className="active:opacity-70">
           <Avatar rounded source={{ uri: user?.photoURL }} />
         </Pressable>
       ),
       headerRight: () => (
-        <View className="w-20 mr-4 flex-row justify-between">
+        <View className="w-20 flex-row justify-between">
           <Pressable className="active:opacity-60">
             <AntDesign name="camerao" size={24} color="black" />
           </Pressable>
