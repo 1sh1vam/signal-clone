@@ -1,14 +1,16 @@
 import { Pressable, ScrollView, View } from 'react-native'
-import React, { useLayoutEffect } from 'react'
+import React, { useEffect, useLayoutEffect, useState } from 'react'
 import CustomListItem from '../components/CustomListItem'
 import { Avatar } from '@rneui/base'
 import { AntDesign, SimpleLineIcons } from 'react-native-vector-icons';
 import useAuthListener from '../hooks/useAuthListener';
 import { signOut } from 'firebase/auth'
-import { auth } from '../lib/firebase'
+import { auth, db } from '../lib/firebase'
+import { collection, onSnapshot } from 'firebase/firestore';
 
 const HomeScreen = ({ navigation }) => {
   const { user } = useAuthListener();
+  const [chats, setChats] = useState([]);
 
   const signOutUser = () => {
     signOut(auth);
@@ -41,9 +43,14 @@ const HomeScreen = ({ navigation }) => {
     })
   }, [user]);
 
+  useEffect(() => onSnapshot(collection(db, 'chats'), (fChats) => {
+    setChats(fChats.docs.map((document) => ({ ...document.data(), id: document.id })));
+  }), [])
+
+  console.log('chats', chats);
   return (
     <ScrollView>
-      <CustomListItem />
+      {chats.map((chat) => <CustomListItem key={chat.id} {...chat} />)}
     </ScrollView>
   )
 }
