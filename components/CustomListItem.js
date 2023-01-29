@@ -1,22 +1,19 @@
 import React from 'react'
 import { Avatar, ListItem } from '@rneui/base'
 
-const CustomListItem = () => {
+const CustomListItem = ({ chatName, desc, photoUrl }) => {
   return (
     <ListItem>
         <Avatar
             rounded
             source={{
-                uri: 'https://cdn-icons-png.flaticon.com/512/847/847969.png'
+                uri: photoUrl
             }}
         />
         <ListItem.Content>
-            <ListItem.Title style={{ fontWeight: '800' }}>First Channel</ListItem.Title>
+            <ListItem.Title style={{ fontWeight: '800' }}>{chatName}</ListItem.Title>
             <ListItem.Subtitle numberOfLines={1} ellipsizeMode="tail">
-                This is a test subtitle.
-                This is a test subtitle.
-                This is a test subtitle.
-                This is a test subtitle.
+                {desc}
             </ListItem.Subtitle>
         </ListItem.Content>
     </ListItem>
