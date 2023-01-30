@@ -1,9 +1,9 @@
 import React from 'react'
 import { Avatar, ListItem } from '@rneui/base'
 
-const CustomListItem = ({ chatName, desc, photoUrl }) => {
+const CustomListItem = ({ chatName, desc, photoUrl, enterChat }) => {
   return (
-    <ListItem>
+    <ListItem onPress={enterChat}>
         <Avatar
             rounded
             source={{

@@ -47,10 +47,12 @@ const HomeScreen = ({ navigation }) => {
     setChats(fChats.docs.map((document) => ({ ...document.data(), id: document.id })));
   }), [])
 
-  console.log('chats', chats);
+  const enterChat = (id, chatName) => {
+    navigation.navigate('Chat', { id, chatName })
+  }
   return (
     <ScrollView>
-      {chats.map((chat) => <CustomListItem key={chat.id} {...chat} />)}
+      {chats.map((chat) => <CustomListItem enterChat={() => enterChat(chat.id, chat.chatName)} key={chat.id} {...chat} />)}
     </ScrollView>
   )
 }
