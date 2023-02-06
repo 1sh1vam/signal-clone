@@ -1,9 +1,10 @@
-import { StyleSheet, Text, View } from 'react-native'
+import { Platform, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native'
 import React, { useLayoutEffect } from 'react'
 import { AntDesign, FontAwesome, Ionicons } from 'react-native-vector-icons'
 import { Avatar } from '@rneui/base';
 import { StyledButton } from '../StyledComponents'
 import { StatusBar } from 'expo-status-bar';
+import { KeyboardAvoidingView } from 'react-native';
 
 const ChatScreen = ({ navigation, route }) => {
   const { chatName } = route.params;
@@ -38,7 +39,19 @@ const ChatScreen = ({ navigation, route }) => {
   return (
     <View className="flex-1">
       <StatusBar style="light" />
-      <Text>ChatScreen</Text>
+      <KeyboardAvoidingView
+        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+        keyboardVerticalOffset={90}
+        className="flex-1"
+      >
+        <ScrollView></ScrollView>
+        <View className="flex-row p-4 items-center gap-6">
+          <TextInput className="flex-1 bottom-0 h-10 p-2.5 rounded-[30px] bg-[#ECECEC] text-gray-500" placeholder="Signal message" />
+          <StyledButton buttonStyle={{ backgroundColor: 'transparent' }}>
+            <Ionicons name="send" size={24} color="#2B68E6" />
+          </StyledButton>
+        </View>
+      </KeyboardAvoidingView>
     </View>
   )
 }
