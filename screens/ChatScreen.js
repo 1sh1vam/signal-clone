@@ -3,6 +3,7 @@ import React, { useLayoutEffect } from 'react'
 import { AntDesign, FontAwesome, Ionicons } from 'react-native-vector-icons'
 import { Avatar } from '@rneui/base';
 import { StyledButton } from '../StyledComponents'
+import { StatusBar } from 'expo-status-bar';
 
 const ChatScreen = ({ navigation, route }) => {
   const { chatName } = route.params;
@@ -35,7 +36,8 @@ const ChatScreen = ({ navigation, route }) => {
   }, []);
 
   return (
-    <View>
+    <View className="flex-1">
+      <StatusBar style="light" />
       <Text>ChatScreen</Text>
     </View>
   )
