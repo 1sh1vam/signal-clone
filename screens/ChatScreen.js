@@ -1,12 +1,21 @@
-import { Platform, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native'
-import React, { useLayoutEffect } from 'react'
-import { AntDesign, FontAwesome, Ionicons } from 'react-native-vector-icons'
+import {
+  Platform,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TextInput,
+  View,
+} from 'react-native';
+import React, { useLayoutEffect, useState } from 'react';
+import { AntDesign, FontAwesome, Ionicons } from 'react-native-vector-icons';
 import { Avatar } from '@rneui/base';
-import { StyledButton } from '../StyledComponents'
+import { StyledButton } from '../StyledComponents';
 import { StatusBar } from 'expo-status-bar';
 import { KeyboardAvoidingView } from 'react-native';
 
 const ChatScreen = ({ navigation, route }) => {
+  const [inputText, setInputText] = useState('');
+
   const { chatName } = route.params;
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -14,12 +23,20 @@ const ChatScreen = ({ navigation, route }) => {
       headerTitleAlign: 'left',
       headerTitle: () => (
         <View className="flex-row items-center flex-1">
-          <Avatar rounded source={{ uri: 'https://cdn-icons-png.flaticon.com/512/847/847969.png' }} />
+          <Avatar
+            rounded
+            source={{
+              uri: 'https://cdn-icons-png.flaticon.com/512/847/847969.png',
+            }}
+          />
           <Text className="text-white font-bold ml-2.5">{chatName}</Text>
         </View>
       ),
       headerLeft: () => (
-        <StyledButton onPress={navigation.goBack} buttonStyle={styles.headerButtonStyle}>
+        <StyledButton
+          onPress={navigation.goBack}
+          buttonStyle={styles.headerButtonStyle}
+        >
           <AntDesign name="arrowleft" size={24} color="#fff" />
         </StyledButton>
       ),
@@ -32,8 +49,8 @@ const ChatScreen = ({ navigation, route }) => {
             <Ionicons name="call" size={24} color="#fff" />
           </StyledButton>
         </View>
-      )
-    })
+      ),
+    });
   }, []);
 
   return (
@@ -46,20 +63,26 @@ const ChatScreen = ({ navigation, route }) => {
       >
         <ScrollView></ScrollView>
         <View className="flex-row p-4 items-center gap-6">
-          <TextInput className="flex-1 bottom-0 h-10 p-2.5 rounded-[30px] bg-[#ECECEC] text-gray-500" placeholder="Signal message" />
+          <TextInput
+            className="flex-1 bottom-0 h-10 p-2.5 rounded-[30px] bg-[#ECECEC] text-gray-500"
+            placeholder="Signal message"
+            value={inputText}
+            onChangeText={setInputText}
+            onSubmitEditing={() => {}}
+          />
           <StyledButton buttonStyle={{ backgroundColor: 'transparent' }}>
             <Ionicons name="send" size={24} color="#2B68E6" />
           </StyledButton>
         </View>
       </KeyboardAvoidingView>
     </View>
-  )
-}
+  );
+};
 
-export default ChatScreen
+export default ChatScreen;
 
 const styles = StyleSheet.create({
   headerButtonStyle: {
-    backgroundColor: 'transparent'
-  }
-})
+    backgroundColor: 'transparent',
+  },
+});
