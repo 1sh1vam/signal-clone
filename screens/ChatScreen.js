@@ -5,7 +5,7 @@ import { Avatar } from '@rneui/base';
 import { StyledButton } from '../StyledComponents'
 
 const ChatScreen = ({ navigation, route }) => {
-  const {  } = route.params;
+  const { chatName } = route.params;
   useLayoutEffect(() => {
     navigation.setOptions({
       title: 'Chat',
@@ -13,11 +13,11 @@ const ChatScreen = ({ navigation, route }) => {
       headerTitle: () => (
         <View className="flex-row items-center flex-1">
           <Avatar rounded source={{ uri: 'https://cdn-icons-png.flaticon.com/512/847/847969.png' }} />
-          <Text className="text-white font-bold ml-2.5">Cenc</Text>
+          <Text className="text-white font-bold ml-2.5">{chatName}</Text>
         </View>
       ),
       headerLeft: () => (
-        <StyledButton buttonStyle={styles.headerButtonStyle}>
+        <StyledButton onPress={navigation.goBack} buttonStyle={styles.headerButtonStyle}>
           <AntDesign name="arrowleft" size={24} color="#fff" />
         </StyledButton>
       ),
