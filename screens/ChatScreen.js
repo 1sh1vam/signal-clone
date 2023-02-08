@@ -12,11 +12,13 @@ import { Avatar } from '@rneui/base';
 import { StyledButton } from '../StyledComponents';
 import { StatusBar } from 'expo-status-bar';
 import { KeyboardAvoidingView } from 'react-native';
+import { addDoc, collection, serverTimestamp } from 'firebase/firestore';
+import { auth, db } from '../lib/firebase';
 
 const ChatScreen = ({ navigation, route }) => {
   const [inputText, setInputText] = useState('');
 
-  const { chatName } = route.params;
+  const { chatName, id } = route.params;
   useLayoutEffect(() => {
     navigation.setOptions({
       title: 'Chat',
@@ -53,6 +55,17 @@ const ChatScreen = ({ navigation, route }) => {
     });
   }, []);
 
+  const sendMessage = async () => {
+    const messagesRef = collection(db, 'chats', id, 'messages');
+    addDoc(messagesRef, {
+      timeStampe: serverTimestamp(),
+      message: inputText,
+      email: auth.currentUser.email,
+      photoUrl: auth.currentUser.photoURL,
+    });
+    setInputText('');
+  }
+
   return (
     <View className="flex-1">
       <StatusBar style="light" />
@@ -68,9 +81,9 @@ const ChatScreen = ({ navigation, route }) => {
             placeholder="Signal message"
             value={inputText}
             onChangeText={setInputText}
-            onSubmitEditing={() => {}}
+            onSubmitEditing={sendMessage}
           />
-          <StyledButton buttonStyle={{ backgroundColor: 'transparent' }}>
+          <StyledButton onPress={sendMessage} buttonStyle={{ backgroundColor: 'transparent' }}>
             <Ionicons name="send" size={24} color="#2B68E6" />
           </StyledButton>
         </View>
