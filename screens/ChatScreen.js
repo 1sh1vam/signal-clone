@@ -6,17 +6,18 @@ import {
   TextInput,
   View,
 } from 'react-native';
-import React, { useLayoutEffect, useState } from 'react';
+import React, { useEffect, useLayoutEffect, useState } from 'react';
 import { AntDesign, FontAwesome, Ionicons } from 'react-native-vector-icons';
 import { Avatar } from '@rneui/base';
 import { StyledButton } from '../StyledComponents';
 import { StatusBar } from 'expo-status-bar';
 import { KeyboardAvoidingView } from 'react-native';
-import { addDoc, collection, serverTimestamp } from 'firebase/firestore';
+import { addDoc, collection, onSnapshot, serverTimestamp } from 'firebase/firestore';
 import { auth, db } from '../lib/firebase';
 
 const ChatScreen = ({ navigation, route }) => {
   const [inputText, setInputText] = useState('');
+  const [messages, setMessages] = useState([]);
 
   const { chatName, id } = route.params;
   useLayoutEffect(() => {
@@ -55,16 +56,28 @@ const ChatScreen = ({ navigation, route }) => {
     });
   }, []);
 
+  useEffect(
+    () =>
+      onSnapshot(collection(db, 'chats', id, 'messages'), (doc) => {
+        setMessages(
+          doc.docs.map((document) => ({ ...document.data(), id: document.id }))
+        );
+      }),
+    []
+  );
+
   const sendMessage = async () => {
     const messagesRef = collection(db, 'chats', id, 'messages');
     addDoc(messagesRef, {
-      timeStampe: serverTimestamp(),
+      timeStamp: serverTimestamp(),
       message: inputText,
       email: auth.currentUser.email,
       photoUrl: auth.currentUser.photoURL,
     });
     setInputText('');
   }
+
+  console.log('messafes', messages);
 
   return (
     <View className="flex-1">
@@ -74,7 +87,19 @@ const ChatScreen = ({ navigation, route }) => {
         keyboardVerticalOffset={90}
         className="flex-1"
       >
-        <ScrollView></ScrollView>
+        <ScrollView className="p-4">
+          {messages.map(({id, message, email}) => email === auth.currentUser.email ? (
+            <View key={id} className="p-4 py-3 bg-[#ECECEC] self-end rounded-xl mb-5 max-w-screen-md relative">
+              <Avatar position="absolute" />
+              <Text>{message}</Text>
+            </View>
+          ) : (
+            <View className="p-4 bg-[#ECECEC] self-start rounded-lg mb-5 max-w-screen-md relative">
+              <Avatar />
+              <Text>{message}</Text>
+            </View>
+          ))}
+        </ScrollView>
         <View className="flex-row p-4 items-center gap-6">
           <TextInput
             className="flex-1 bottom-0 h-10 p-2.5 rounded-[30px] bg-[#ECECEC] text-gray-500"
