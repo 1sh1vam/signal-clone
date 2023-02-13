@@ -88,17 +88,36 @@ const ChatScreen = ({ navigation, route }) => {
         className="flex-1"
       >
         <ScrollView className="p-4">
-          {messages.map(({id, message, email}) => email === auth.currentUser.email ? (
-            <View key={id} className="p-4 py-3 bg-[#ECECEC] self-end rounded-xl mb-5 max-w-screen-md relative">
-              <Avatar position="absolute" />
-              <Text>{message}</Text>
-            </View>
-          ) : (
-            <View className="p-4 bg-[#ECECEC] self-start rounded-lg mb-5 max-w-screen-md relative">
-              <Avatar />
-              <Text>{message}</Text>
-            </View>
-          ))}
+          {messages.map(({ id, message, email, photoUrl }) =>
+            email === auth.currentUser.email ? (
+              <View
+                key={id}
+                className="p-4 py-3 bg-[#ECECEC] self-end rounded-xl mb-5 max-w-screen-md relative"
+              >
+                <Avatar
+                  rounded
+                  size={30}
+                  bottom={-15}
+                  right={-5}
+                  position="absolute"
+                  source={{ uri: photoUrl }}
+                />
+                <Text>{message}</Text>
+              </View>
+            ) : (
+              <View className="p-4 bg-[#ECECEC] self-start rounded-lg mb-5 max-w-screen-md relative">
+                <Avatar
+                  rounded
+                  size={30}
+                  position="absolute"
+                  bottom={-15}
+                  right={-5}
+                  source={{ uri: photoUrl }}
+                />
+                <Text>{message}</Text>
+              </View>
+            )
+          )}
         </ScrollView>
         <View className="flex-row p-4 items-center gap-6">
           <TextInput
@@ -108,7 +127,10 @@ const ChatScreen = ({ navigation, route }) => {
             onChangeText={setInputText}
             onSubmitEditing={sendMessage}
           />
-          <StyledButton onPress={sendMessage} buttonStyle={{ backgroundColor: 'transparent' }}>
+          <StyledButton
+            onPress={sendMessage}
+            buttonStyle={{ backgroundColor: 'transparent' }}
+          >
             <Ionicons name="send" size={24} color="#2B68E6" />
           </StyledButton>
         </View>
