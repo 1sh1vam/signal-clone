@@ -59,7 +59,7 @@ const ChatScreen = ({ navigation, route }) => {
 
   useEffect(
     () =>
-      onSnapshot(query(collection(db, 'chats', id, 'messages'), orderBy('timeStamp', 'desc')), (doc) => {
+      onSnapshot(query(collection(db, 'chats', id, 'messages'), orderBy('timeStamp', 'asc')), (doc) => {
         setMessages(
           doc.docs.map((document) => ({ ...document.data(), id: document.id }))
         );
@@ -87,12 +87,12 @@ const ChatScreen = ({ navigation, route }) => {
         keyboardVerticalOffset={90}
         className="flex-1"
       >
-        <ScrollView>
+        <ScrollView contentContainerStyle={{ padding: 16 }}>
           {messages.map(({ id, message, email, photoUrl, displayName }, index) =>
             email === auth.currentUser.email ? (
               <View
                 key={id}
-                className={`p-4 bg-[#ECECEC] mr-4 self-end rounded-xl mb-5 max-w-[80%] relative ${index === 0 ? 'mt-4' : ''}`}
+                className="p-4 bg-[#ECECEC] self-end rounded-xl mb-5 max-w-[80%] relative"
               >
                 <Avatar
                   rounded
@@ -105,7 +105,7 @@ const ChatScreen = ({ navigation, route }) => {
                 <Text className="text-black font-medium">{message}</Text>
               </View>
             ) : (
-              <View key={id} className={`p-4 bg-[#2B68E6] self-start rounded-lg ml-4 mb-5 max-w-[80%] ${index === 0 ? 'mt-4' : ''} relative`}>
+              <View key={id} className="p-4 bg-[#2B68E6] self-start rounded-lg mb-5 max-w-[80%] relative">
                 <Avatar
                   rounded
                   size={30}
