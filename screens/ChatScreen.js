@@ -72,13 +72,12 @@ const ChatScreen = ({ navigation, route }) => {
     addDoc(messagesRef, {
       timeStamp: serverTimestamp(),
       message: inputText,
+      displayName: auth.currentUser.displayName,
       email: auth.currentUser.email,
       photoUrl: auth.currentUser.photoURL,
     });
     setInputText('');
   }
-
-  console.log('messafes', messages);
 
   return (
     <View className="flex-1">
@@ -89,11 +88,11 @@ const ChatScreen = ({ navigation, route }) => {
         className="flex-1"
       >
         <ScrollView className="p-4 pr-0">
-          {messages.map(({ id, message, email, photoUrl }) =>
+          {messages.map(({ id, message, email, photoUrl, displayName }) =>
             email === auth.currentUser.email ? (
               <View
                 key={id}
-                className="p-4 py-3 bg-[#ECECEC] mr-4 self-end rounded-xl mb-5 max-w-screen-md relative"
+                className="p-4 py-3 bg-[#ECECEC] mr-4 self-end rounded-xl mb-5 max-w-[80%] relative"
               >
                 <Avatar
                   rounded
@@ -106,21 +105,22 @@ const ChatScreen = ({ navigation, route }) => {
                 <Text className="text-black font-medium">{message}</Text>
               </View>
             ) : (
-              <View key={id} className="p-4 bg-[#2B68E6] self-start rounded-lg mb-5 max-w-screen-md relative">
+              <View key={id} className="p-4 bg-[#2B68E6] self-start rounded-lg mb-5 max-w-[80%] relative">
                 <Avatar
                   rounded
                   size={30}
                   position="absolute"
                   bottom={-15}
-                  right={-5}
+                  left={-5}
                   source={{ uri: photoUrl }}
                 />
-                <Text className="text-black font-medium">{message}</Text>
+                <Text className="text-white font-medium">{message}</Text>
+                <Text className="text-xs text-white mt-3">{displayName}</Text>
               </View>
             )
           )}
         </ScrollView>
-        <View className="flex-row p-4 items-center gap-6">
+        <View className="flex-row p-4 items-center gap-6 bg-red-400">
           <TextInput
             className="flex-1 bottom-0 h-10 p-2.5 rounded-[30px] bg-[#ECECEC] text-gray-500"
             placeholder="Signal message"
