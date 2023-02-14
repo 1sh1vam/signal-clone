@@ -15,18 +15,19 @@ const CustomListItem = ({ id, chatName, desc, photoUrl, enterChat }) => {
     []
   );
 
+  const lastMessage = message ? `${message.displayName}: ${message.message}` : '';
   return (
     <ListItem style={{ borderTopWidth: 1, borderColor: '#ECECEC' }} onPress={enterChat}>
         <Avatar
             rounded
             source={{
-                uri: photoUrl
+                uri: message?.photoUrl || 'https://cdn-icons-png.flaticon.com/512/847/847969.png'
             }}
         />
         <ListItem.Content>
             <ListItem.Title style={{ fontWeight: '800' }}>{chatName}</ListItem.Title>
             <ListItem.Subtitle numberOfLines={1} ellipsizeMode="tail">
-                {desc}
+                {lastMessage}
             </ListItem.Subtitle>
         </ListItem.Content>
     </ListItem>
