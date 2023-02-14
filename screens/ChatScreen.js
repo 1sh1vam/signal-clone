@@ -6,7 +6,7 @@ import {
   TextInput,
   View,
 } from 'react-native';
-import React, { useEffect, useLayoutEffect, useState } from 'react';
+import React, { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { AntDesign, FontAwesome, Ionicons } from 'react-native-vector-icons';
 import { Avatar } from '@rneui/base';
 import { StyledButton } from '../StyledComponents';
@@ -18,6 +18,7 @@ import { auth, db } from '../lib/firebase';
 const ChatScreen = ({ navigation, route }) => {
   const [inputText, setInputText] = useState('');
   const [messages, setMessages] = useState([]);
+  const scrollRef = useRef();
 
   const { chatName, id } = route.params;
   useLayoutEffect(() => {
@@ -87,37 +88,47 @@ const ChatScreen = ({ navigation, route }) => {
         keyboardVerticalOffset={90}
         className="flex-1"
       >
-        <ScrollView contentContainerStyle={{ padding: 16 }}>
-          {messages.map(({ id, message, email, photoUrl, displayName }, index) =>
-            email === auth.currentUser.email ? (
-              <View
-                key={id}
-                className="p-4 bg-[#ECECEC] self-end rounded-xl mb-5 max-w-[80%] relative"
-              >
-                <Avatar
-                  rounded
-                  size={30}
-                  bottom={-15}
-                  right={-5}
-                  position="absolute"
-                  source={{ uri: photoUrl }}
-                />
-                <Text className="text-black font-medium">{message}</Text>
-              </View>
-            ) : (
-              <View key={id} className="p-4 bg-[#2B68E6] self-start rounded-lg mb-5 max-w-[80%] relative">
-                <Avatar
-                  rounded
-                  size={30}
-                  position="absolute"
-                  bottom={-15}
-                  left={-5}
-                  source={{ uri: photoUrl }}
-                />
-                <Text className="text-white font-medium">{message}</Text>
-                <Text className="text-xs text-white mt-3">{displayName}</Text>
-              </View>
-            )
+        <ScrollView
+          onContentSizeChange={() =>
+            scrollRef.current?.scrollToEnd({ animated: true })
+          }
+          ref={scrollRef}
+          contentContainerStyle={{ padding: 16 }}
+        >
+          {messages.map(
+            ({ id, message, email, photoUrl, displayName }, index) =>
+              email === auth.currentUser.email ? (
+                <View
+                  key={id}
+                  className="p-4 bg-[#ECECEC] self-end rounded-xl mb-5 max-w-[80%] relative"
+                >
+                  <Avatar
+                    rounded
+                    size={30}
+                    bottom={-15}
+                    right={-5}
+                    position="absolute"
+                    source={{ uri: photoUrl }}
+                  />
+                  <Text className="text-black font-medium">{message}</Text>
+                </View>
+              ) : (
+                <View
+                  key={id}
+                  className="p-4 bg-[#2B68E6] self-start rounded-lg mb-5 max-w-[80%] relative"
+                >
+                  <Avatar
+                    rounded
+                    size={30}
+                    position="absolute"
+                    bottom={-15}
+                    left={-5}
+                    source={{ uri: photoUrl }}
+                  />
+                  <Text className="text-white font-medium">{message}</Text>
+                  <Text className="text-xs text-white mt-3">{displayName}</Text>
+                </View>
+              )
           )}
         </ScrollView>
         <View className="flex-row p-4 items-center">
