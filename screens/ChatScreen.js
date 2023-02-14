@@ -102,10 +102,10 @@ const ChatScreen = ({ navigation, route }) => {
                   position="absolute"
                   source={{ uri: photoUrl }}
                 />
-                <Text>{message}</Text>
+                <Text className="text-black font-medium">{message}</Text>
               </View>
             ) : (
-              <View className="p-4 bg-[#ECECEC] self-start rounded-lg mb-5 max-w-screen-md relative">
+              <View className="p-4 bg-[#2B68E6] self-start rounded-lg mb-5 max-w-screen-md relative">
                 <Avatar
                   rounded
                   size={30}
@@ -114,7 +114,7 @@ const ChatScreen = ({ navigation, route }) => {
                   right={-5}
                   source={{ uri: photoUrl }}
                 />
-                <Text>{message}</Text>
+                <Text className="text-black font-medium">{message}</Text>
               </View>
             )
           )}
