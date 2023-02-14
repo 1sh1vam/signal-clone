@@ -33,7 +33,7 @@ const AddChatScreen = ({ navigation }) => {
         onChangeText={setChatName}
         onSubmitEditing={onCreateChat}
       />
-      <StyledButton onPress={onCreateChat}>Create a new chat</StyledButton>
+      <StyledButton disabled={!chatName} onPress={onCreateChat}>Create a new chat</StyledButton>
     </View>
   )
 }
