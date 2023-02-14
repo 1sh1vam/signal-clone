@@ -24,6 +24,7 @@ const ChatScreen = ({ navigation, route }) => {
     navigation.setOptions({
       title: 'Chat',
       headerTitleAlign: 'left',
+      headerBackVisible: false,
       headerTitle: () => (
         <View className="flex-row items-center flex-1">
           <Avatar
@@ -87,12 +88,12 @@ const ChatScreen = ({ navigation, route }) => {
         keyboardVerticalOffset={90}
         className="flex-1"
       >
-        <ScrollView className="p-4">
+        <ScrollView className="p-4 pr-0">
           {messages.map(({ id, message, email, photoUrl }) =>
             email === auth.currentUser.email ? (
               <View
                 key={id}
-                className="p-4 py-3 bg-[#ECECEC] self-end rounded-xl mb-5 max-w-screen-md relative"
+                className="p-4 py-3 bg-[#ECECEC] mr-4 self-end rounded-xl mb-5 max-w-screen-md relative"
               >
                 <Avatar
                   rounded
