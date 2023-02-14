@@ -3,7 +3,7 @@ import { Avatar, ListItem } from '@rneui/base'
 
 const CustomListItem = ({ chatName, desc, photoUrl, enterChat }) => {
   return (
-    <ListItem onPress={enterChat}>
+    <ListItem style={{ borderTopWidth: 1, borderColor: '#ECECEC' }} onPress={enterChat}>
         <Avatar
             rounded
             source={{

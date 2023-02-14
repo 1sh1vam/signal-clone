@@ -106,7 +106,7 @@ const ChatScreen = ({ navigation, route }) => {
                 <Text className="text-black font-medium">{message}</Text>
               </View>
             ) : (
-              <View className="p-4 bg-[#2B68E6] self-start rounded-lg mb-5 max-w-screen-md relative">
+              <View key={id} className="p-4 bg-[#2B68E6] self-start rounded-lg mb-5 max-w-screen-md relative">
                 <Avatar
                   rounded
                   size={30}
