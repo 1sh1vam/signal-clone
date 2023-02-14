@@ -12,7 +12,7 @@ import { Avatar } from '@rneui/base';
 import { StyledButton } from '../StyledComponents';
 import { StatusBar } from 'expo-status-bar';
 import { KeyboardAvoidingView } from 'react-native';
-import { addDoc, collection, onSnapshot, serverTimestamp } from 'firebase/firestore';
+import { addDoc, collection, onSnapshot, orderBy, query, serverTimestamp } from 'firebase/firestore';
 import { auth, db } from '../lib/firebase';
 
 const ChatScreen = ({ navigation, route }) => {
@@ -30,7 +30,7 @@ const ChatScreen = ({ navigation, route }) => {
           <Avatar
             rounded
             source={{
-              uri: 'https://cdn-icons-png.flaticon.com/512/847/847969.png',
+              uri: messages[0]?.photoUrl || 'https://cdn-icons-png.flaticon.com/512/847/847969.png',
             }}
           />
           <Text className="text-white font-bold ml-2.5">{chatName}</Text>
@@ -55,11 +55,11 @@ const ChatScreen = ({ navigation, route }) => {
         </View>
       ),
     });
-  }, []);
+  }, [navigation, messages]);
 
   useEffect(
     () =>
-      onSnapshot(collection(db, 'chats', id, 'messages'), (doc) => {
+      onSnapshot(query(collection(db, 'chats', id, 'messages'), orderBy('timeStamp', 'desc')), (doc) => {
         setMessages(
           doc.docs.map((document) => ({ ...document.data(), id: document.id }))
         );
