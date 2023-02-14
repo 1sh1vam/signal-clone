@@ -87,12 +87,12 @@ const ChatScreen = ({ navigation, route }) => {
         keyboardVerticalOffset={90}
         className="flex-1"
       >
-        <ScrollView className="p-4 pr-0">
-          {messages.map(({ id, message, email, photoUrl, displayName }) =>
+        <ScrollView>
+          {messages.map(({ id, message, email, photoUrl, displayName }, index) =>
             email === auth.currentUser.email ? (
               <View
                 key={id}
-                className="p-4 py-3 bg-[#ECECEC] mr-4 self-end rounded-xl mb-5 max-w-[80%] relative"
+                className={`p-4 bg-[#ECECEC] mr-4 self-end rounded-xl mb-5 max-w-[80%] relative ${index === 0 ? 'mt-4' : ''}`}
               >
                 <Avatar
                   rounded
@@ -105,7 +105,7 @@ const ChatScreen = ({ navigation, route }) => {
                 <Text className="text-black font-medium">{message}</Text>
               </View>
             ) : (
-              <View key={id} className="p-4 bg-[#2B68E6] self-start rounded-lg mb-5 max-w-[80%] relative">
+              <View key={id} className={`p-4 bg-[#2B68E6] self-start rounded-lg ml-4 mb-5 max-w-[80%] ${index === 0 ? 'mt-4' : ''} relative`}>
                 <Avatar
                   rounded
                   size={30}
@@ -120,9 +120,9 @@ const ChatScreen = ({ navigation, route }) => {
             )
           )}
         </ScrollView>
-        <View className="flex-row p-4 items-center gap-6 bg-red-400">
+        <View className="flex-row p-4 items-center">
           <TextInput
-            className="flex-1 bottom-0 h-10 p-2.5 rounded-[30px] bg-[#ECECEC] text-gray-500"
+            className="flex-1 bottom-0 mr-6 h-10 p-2.5 rounded-[30px] bg-[#ECECEC] text-gray-500"
             placeholder="Signal message"
             value={inputText}
             onChangeText={setInputText}
