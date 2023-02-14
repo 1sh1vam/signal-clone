@@ -26,7 +26,7 @@ const HomeScreen = ({ navigation }) => {
       headerTitleStyle: { color: '#000' },
       headerTintColor: '#000',
       headerLeft: () => (
-        <Pressable onPress={signOutUser} className="active:opacity-70">
+        <Pressable onPress={signOutUser} className="active:opacity-70 mr-4">
           <Avatar rounded source={{ uri: user?.photoURL }} />
         </Pressable>
       ),
